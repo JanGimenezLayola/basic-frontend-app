@@ -1,35 +1,36 @@
 import axios from 'axios';
 
 class AuthService {
-  constructor() {
+  constructor () {
     this.auth = axios.create({
-      baseURL: 'http://localhost:4000'
-    })
+      baseURL: 'http://localhost:4000',
+      withCredentials: true
+    });
   }
 
-  signup(user) {
+  signup (user) {
     const { username, password } = user;
-    return this.auth.post('/auth/signup', {username, password})
+    return this.auth.post('/auth/signup', { username, password })
       .then(({ data }) => data);
   }
 
-  login(user) {
+  login (user) {
     const { username, password } = user;
-    return this.auth.post('/auth/login', {username, password})
+    return this.auth.post('/auth/login', { username, password })
       .then(({ data }) => data);
   }
 
-  logout() {
+  logout () {
     return this.auth.post('/auth/logout')
-      .then(response => response.data)
+      .then(response => response.data);
   }
 
-  me() {
+  me () {
     return this.auth.get('/auth/me')
-    .then(response => response.data)
+      .then(response => response.data);
   }
 }
 
-const auth = new AuthService();
+const authService = new AuthService();
 
-export default auth
+export default authService;

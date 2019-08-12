@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import auth from '../services/auth-service';
+import withAuth from '../components/withAuth';
+
 
 class Signup extends Component {
 
@@ -15,7 +16,7 @@ class Signup extends Component {
     const username = this.state.username;
     const password = this.state.password;
 
-    auth.signup({ username, password })
+    this.props.signup({ username, password })
       .then( (user) => {
         console.log(user)
         this.setState({
@@ -37,9 +38,9 @@ class Signup extends Component {
       <>
         <form onSubmit={this.handleFormSubmit}>
           <label htmlFor='username'>Username:</label>
-          <input id='username' type='text' name='username' value={username} onChange={this.handleChange}/>
+          <input id='username' type='text' name='username' value={username} onChange={this.handleChange} autoComplete="username"/>
           <label htmlFor='password'>Password:</label>
-          <input id='password' type='password' name='password' value={password} onChange={this.handleChange} />
+          <input id='password' type='password' name='password' value={password} onChange={this.handleChange} autoComplete="new-password" />
           <input type='submit' value='Signup' />
         </form>
 
@@ -52,4 +53,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default withAuth(Signup);
