@@ -9,6 +9,7 @@ class AuthProvider extends Component {
   state = {
     isLoggedIn: false,
     user: {},
+    isLoading: true
   }
 
   userSignUp = (user) => {
@@ -16,7 +17,8 @@ class AuthProvider extends Component {
     .then((user) => {
       this.setState({
         isLoggedIn: true,
-        user
+        user,
+        isLoading: false
       })
     })
   }
@@ -26,7 +28,8 @@ class AuthProvider extends Component {
     .then((user) => {
       this.setState({
         isLoggedIn: true,
-        user
+        user,
+        isLoading: false
       })
     })
   }
@@ -36,13 +39,15 @@ class AuthProvider extends Component {
     .then(() => {
       this.setState({
         isLoggedIn: false,
-        user: {}
+        user: {},
+        isLoading: false
       })
     })
     .catch((error) => {
       this.setState({
         isLoggedIn: false,
-        user: {}
+        user: {},
+        isLoading: false
       })
     })
   }
@@ -52,25 +57,30 @@ class AuthProvider extends Component {
     .then((user) => {
       this.setState({
         user,
-        isLoggedIn: true
+        isLoggedIn: true,
+        isLoading: false
       })
     })
   }
 
   render() {
-    const { user, isLoggedIn } = this.state;
+    const { user, isLoggedIn, isLoading } = this.state;
     return (
-      <AuthContext.Provider value={
-        {
-          user,
-          isLoggedIn,
-          login: this.userLogin,
-          signup: this.userSignUp,
-          logout: this.userLogout
-        }
-      }> 
-        {this.props.children}
-      </AuthContext.Provider>
+      <>
+        {isLoading ? <p>Loading...</p> : (
+          <AuthContext.Provider value={
+            {
+              user,
+              isLoggedIn,
+              login: this.userLogin,
+              signup: this.userSignUp,
+              logout: this.userLogout
+            }
+          }> 
+            {this.props.children}
+          </AuthContext.Provider>
+        )}
+      </>
     )
   }
 }

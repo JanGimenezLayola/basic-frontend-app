@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router,  Switch} from 'react-router-dom';
 
-import Navbar from './components/Navbar';
 import Private from './pages/Private';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 
+import Navbar from './components/Navbar';
+import PrivateRoute from './components/PrivateRoute';
+
 import AuthProvider from './context/auth-context'
+import AnonRoute from './components/AnonRoute';
 
 import './App.css';
 import 'milligram';
@@ -20,9 +23,9 @@ class App extends Component {
             <h1>Basic React Authentication</h1>
             <Navbar />
             <Switch>
-              <Route path="/signup" component={Signup} />
-              <Route path="/login" component={Login} />
-              <Route path="/private" component={Private} />
+              <AnonRoute path="/signup" component={Signup} />
+              <AnonRoute path="/login" component={Login} />
+              <PrivateRoute path="/private" component={Private} />
             </Switch>
           </div>
         </AuthProvider>
